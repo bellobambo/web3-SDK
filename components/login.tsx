@@ -1,17 +1,25 @@
 'use client'
 
-import React from 'react'
-import { ConnectButton } from "thirdweb/react";
-import { createWallet, inAppWallet } from "thirdweb/wallets";
-import {chain, client} from '../utils/constants'
+import React from 'react';
+import { ConnectButton, useActiveAccount } from 'thirdweb/react';
+import { chain, client } from '../utils/constants';
+import Counter from './counter';
 
 const Login = () => {
-  return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <ConnectButton client={client} chain={chain} />
+    const account = useActiveAccount();
 
-    </div>
-  )
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div style={{ marginTop: '20px' }}>
+                <ConnectButton
+                    client={client}
+                    chain={chain}
+                    connectModal={{ size: 'compact' }}
+                />
+                {account ? <Counter /> : null}
+            </div>
+        </div>
+    );
 }
 
-export default Login
+export default Login;
